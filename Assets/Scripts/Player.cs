@@ -23,12 +23,20 @@ public class Player : MonoBehaviour
         float verticalInput =
             Input.GetAxis("Vertical");
 
-        transform.Translate(
-            Vector3.right * horizontalInput * _speed * Time.deltaTime);
+        Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
-        transform.Translate(
-            Vector3.up * verticalInput * _speed * Time.deltaTime);
+        transform.Translate(direction * _speed * Time.deltaTime);
 
+        // Y position control
+        // if the player position on the y axis is greater than zero
+        // then y position = 0
+        // if the player position on the y axis is less than -3.8f
+        // then y position = -3.8f
 
+        if (transform.position.y > 0 )
+        {
+            transform.position
+                = new Vector3(transform.position.x, 0, 0);
+        }
     }
 }
