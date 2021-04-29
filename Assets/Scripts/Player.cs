@@ -44,6 +44,12 @@ public class Player : MonoBehaviour
                 = new Vector3(transform.position.x, -3.8f, 0);
         }
 
+        // X position control
+        // if player position on the x axis is greater than 11
+        // then x position = -11
+        // if player position on the x axis is less than -11
+        // then x position = 11
+
         if (transform.position.x > 11)
         {
             transform.position
