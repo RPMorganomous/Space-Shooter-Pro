@@ -7,6 +7,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speed = 3.5f;
 
+    [SerializeField]
+    private GameObject _laserPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,8 +20,21 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CalculateMovement();
+
+        // if space key pressed
+        // instantiate laser
+
+        if (Input.GetKeyDown("space"))
+        {
+            Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+        }
+
+    }
+    void CalculateMovement()
+    {
         float horizontalInput =
-            Input.GetAxis("Horizontal");
+              Input.GetAxis("Horizontal");
 
         float verticalInput =
             Input.GetAxis("Vertical");
@@ -33,16 +49,8 @@ public class Player : MonoBehaviour
         // if the player position on the y axis is less than -3.8f
         // then y position = -3.8f
 
-        if (transform.position.y > 0 )
-        {
-            transform.position
-                = new Vector3(transform.position.x, 0, 0);
-        }
-        else if (transform.position.y < -3.8f )
-        {
-            transform.position
-                = new Vector3(transform.position.x, -3.8f, 0);
-        }
+        transform.position
+            = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
 
         // X position control
         // if player position on the x axis is greater than 11
@@ -60,6 +68,5 @@ public class Player : MonoBehaviour
             transform.position
                 = new Vector3(11, transform.position.y, 0);
         }
-
     }
 }
