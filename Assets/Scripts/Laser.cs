@@ -18,11 +18,8 @@ public class Laser : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //translate laser up
         transform.Translate(
             Vector3.up * _speed * Time.deltaTime);
-
-        //if y position > 8  then destroy the object
 
         if (transform.position.y > 8)
         {
