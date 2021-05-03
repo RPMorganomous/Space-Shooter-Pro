@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,11 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Vector3 offset = new Vector3(0, 0.8f, 0);
 
+    [SerializeField]
+    private float _fireRate = 0.15f;
+    private float _canFire = -1.0f;
+
+
     void Start()
     {
         transform.position
@@ -23,12 +29,18 @@ public class Player : MonoBehaviour
     {
         CalculateMovement();
 
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown("space") && Time.time > _canFire)
         {
-            Instantiate(_laserPrefab, transform.position + offset, Quaternion.identity);
+            FireLaser();
         }
-
     }
+
+    private void FireLaser()
+    {
+            _canFire = Time.time + _fireRate;
+            Instantiate(_laserPrefab, transform.position + offset, Quaternion.identity);
+    }
+
     void CalculateMovement()
     {
         float horizontalInput =
