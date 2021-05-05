@@ -30,4 +30,20 @@ public class Enemy : MonoBehaviour
 
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+
+        Debug.Log("Hit: " + other.transform.name);
+
+        // check tag through other
+
+        // if other is player
+        // damage the player (later)
+        // destroy the enemy
+
+        // if other is laser
+        // destroy laser
+        // destroy us
+    }
 }
