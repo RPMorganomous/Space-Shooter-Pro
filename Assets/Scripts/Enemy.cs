@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour
         // if other is player
         // damage the player (later)
         // destroy the enemy
-        if (other.transform.name == "Player")
+        if (other.tag == "Player")
         {
             Destroy(this.gameObject);
         }
@@ -53,7 +53,7 @@ public class Enemy : MonoBehaviour
         // destroy laser
         // destroy us
 
-        if (other.transform.name == "Laser(Clone)")
+        if (other.tag == "Laser")
         {
             Destroy(this.gameObject);
             Destroy(other.gameObject);
