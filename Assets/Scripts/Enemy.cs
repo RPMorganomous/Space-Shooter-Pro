@@ -10,7 +10,9 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        float randomX = Random.Range(-8f, 9f);
+        transform.position =
+            new Vector3(randomX, 4f, 0);
     }
 
     // Update is called once per frame
@@ -41,9 +43,20 @@ public class Enemy : MonoBehaviour
         // if other is player
         // damage the player (later)
         // destroy the enemy
+        if (other.transform.name == "Player")
+        {
+            Destroy(this.gameObject);
+        }
+
 
         // if other is laser
         // destroy laser
         // destroy us
+
+        if (other.transform.name == "Laser(Clone)")
+        {
+            Destroy(this.gameObject);
+            Destroy(other.gameObject);
+        }
     }
 }
