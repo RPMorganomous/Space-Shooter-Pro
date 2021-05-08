@@ -16,6 +16,10 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private float _fireRate = 0.15f;
+
+    [SerializeField]
+    private int _lives = 3;
+
     private float _canFire = -1.0f;
 
 
@@ -67,4 +71,10 @@ public class Player : MonoBehaviour
                 = new Vector3(11, transform.position.y, 0);
         }
     }
+
+    public void Damage()
+    {
+        _lives--;
+    }
+
 }

@@ -38,6 +38,8 @@ public class Enemy : MonoBehaviour
 
         Debug.Log("Hit: " + other.transform.name);
 
+        Player player = other.transform.GetComponent<Player>();
+
         // check tag through other
 
         // if other is player
@@ -46,6 +48,11 @@ public class Enemy : MonoBehaviour
         if (other.tag == "Player")
         {
             Destroy(this.gameObject);
+            
+            if (player != null)
+            {
+                player.Damage();
+            }
         }
 
 
