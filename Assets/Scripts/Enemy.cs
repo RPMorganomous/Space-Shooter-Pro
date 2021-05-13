@@ -9,9 +9,9 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        float randomX = Random.Range(-8f, 9f);
-        transform.position =
-            new Vector3(randomX, 4f, 0);
+        //float randomX = Random.Range(-8f, 9f);
+        //transform.position =
+        //    new Vector3(randomX, 4f, 0);
     }
 
     void Update()
