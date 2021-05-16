@@ -7,6 +7,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _enemyPrefab;
 
+    [SerializeField]
+    private GameObject _enemyContainer;
 
     // Start is called before the first frame update
     void Start()
@@ -20,17 +22,15 @@ public class SpawnManager : MonoBehaviour
         
     }
 
-    //spawn a game object every 5 seconds
-    //create a coroutine of type IEnumerator -- Yield Events
-    //while loop
-
     IEnumerator SpawnRoutine()
     {
         while (true)
         {
+            
             Vector3 posToSpawn = new Vector3(Random.Range(-8f,8f), 7, 0);
 
-            Instantiate(_enemyPrefab, new Vector3(1.0f,1.0f,0), Quaternion.identity);
+            GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
+            newEnemy.transform.parent = _enemyContainer.transform;
 
             yield return new WaitForSeconds(1.0f);
         }
