@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     private float _canFire = -1.0f;
 
     [SerializeField]
-    private bool _trippleShotActive = true;
+    private bool _trippleShotActive = false;
 
     private SpawnManager _spawnManager;
 
@@ -108,4 +108,19 @@ public class Player : MonoBehaviour
 
     }
 
+    public void PowerUp()
+    {
+        _trippleShotActive = true;
+        StartCoroutine(TripleShotPowerDownRoutine());
+    }
+
+    IEnumerator TripleShotPowerDownRoutine()
+    {
+            yield return new WaitForSeconds(5.0f);
+            _trippleShotActive = false;
+    }
+
+    //IEnumerator TripleShotPowerDownRoutine
+    //wait 5 seconds
+    //set triple shot to false
 }
