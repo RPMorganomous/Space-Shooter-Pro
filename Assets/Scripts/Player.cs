@@ -120,7 +120,4 @@ public class Player : MonoBehaviour
             _trippleShotActive = false;
     }
 
-    //IEnumerator TripleShotPowerDownRoutine
-    //wait 5 seconds
-    //set triple shot to false
 }
