@@ -7,13 +7,15 @@ public class Player : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 3.5f;
+    [SerializeField]
+    private float _speedMultiplier = 2;
 
     [SerializeField]
     private GameObject _laserPrefab;
 
     [SerializeField]
-    private GameObject _trippleShot;   
-    
+    private GameObject _tripleShot;
+
     [SerializeField]
     private Vector3 offset = new Vector3(0, 0.8f, 0);
 
@@ -25,11 +27,13 @@ public class Player : MonoBehaviour
 
     private float _canFire = -1.0f;
 
-    [SerializeField]
-    private bool _trippleShotActive = false;
+    private bool _tripleShotActive = false;
+    private bool _speedBoostActive = false;
 
     private SpawnManager _spawnManager;
 
+    int lastRunnerTripleShot = 0;
+    int lastRunnerSpeedBoost = 0;
 
     void Start()
     {
@@ -57,16 +61,14 @@ public class Player : MonoBehaviour
     {
         _canFire = Time.time + _fireRate;
 
-        if (_trippleShotActive == true)
+        if (_tripleShotActive == true)
         {
-            Instantiate(_trippleShot, transform.position, Quaternion.identity);
+            Instantiate(_tripleShot, transform.position, Quaternion.identity);
         }
         else
         {
             Instantiate(_laserPrefab, transform.position + offset, Quaternion.identity);
         }
-            
-            
     }
 
     void CalculateMovement()
@@ -78,8 +80,15 @@ public class Player : MonoBehaviour
             Input.GetAxis("Vertical");
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
-
-        transform.Translate(direction * _speed * Time.deltaTime);
+        if (_speedBoostActive == true)
+        {
+            transform.Translate(direction * (_speed * _speedMultiplier) * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(direction * _speed * Time.deltaTime);
+        }
+        
 
         transform.position
             = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
@@ -108,16 +117,64 @@ public class Player : MonoBehaviour
 
     }
 
-    public void PowerUp()
+    public void TripleShotActive()
     {
-        _trippleShotActive = true;
-        StartCoroutine(TripleShotPowerDownRoutine());
+        if (_tripleShotActive == false)
+        {
+            _tripleShotActive = true;
+            StartCoroutine(TripleShotPowerDownRoutine());
+        }
+        else
+        {
+            lastRunnerTripleShot = lastRunnerTripleShot + 1;
+            Debug.Log("lastRunner = " + lastRunnerTripleShot);
+        }
     }
 
     IEnumerator TripleShotPowerDownRoutine()
     {
-            yield return new WaitForSeconds(5.0f);
-            _trippleShotActive = false;
+
+        yield return new WaitForSeconds(5.0f);
+        if (lastRunnerTripleShot == 0)
+        {
+            _tripleShotActive = false;
+        }
+        else
+        {
+            lastRunnerTripleShot = lastRunnerTripleShot - 1;
+            _tripleShotActive = false;
+            Debug.Log("TS OFF");
+            TripleShotActive();
+        }
+    }
+
+    public void SpeedBoostActive()
+    {
+        if (_speedBoostActive == false)
+        {
+            _speedBoostActive = true;
+            StartCoroutine(SpeedBoostPowerDownRoutine());
+        }
+        else
+        {
+            lastRunnerSpeedBoost = lastRunnerSpeedBoost + 1;
+        }
+    }
+
+    IEnumerator SpeedBoostPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        if (lastRunnerSpeedBoost == 0)
+        {
+            _speedBoostActive = false;
+        }
+        else
+        {
+            lastRunnerSpeedBoost = lastRunnerSpeedBoost - 1;
+            _speedBoostActive = false;
+            SpeedBoostActive();
+        }
+        
     }
 
 }
