@@ -29,11 +29,16 @@ public class Player : MonoBehaviour
 
     private bool _tripleShotActive = false;
     private bool _speedBoostActive = false;
+    private bool _shieldsActive = false;
 
     private SpawnManager _spawnManager;
 
     int lastRunnerTripleShot = 0;
     int lastRunnerSpeedBoost = 0;
+
+    //variable reference to shield object
+    [SerializeField]
+    private GameObject shieldVisualizer;
 
     void Start()
     {
@@ -107,6 +112,13 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
+        if (_shieldsActive == true)
+        {
+            _shieldsActive = false;
+            shieldVisualizer.SetActive(false);
+            return;  
+        }
+
         _lives--;
 
         if (_lives < 1)
@@ -177,4 +189,16 @@ public class Player : MonoBehaviour
         
     }
 
+    public void ShieldsActive()
+    {
+        if (_shieldsActive == false)
+        {
+            _shieldsActive = true;
+            shieldVisualizer.SetActive(true);
+        }
+        else
+        {
+            //could add a shield multiplier here?
+        }
+    }
 }
