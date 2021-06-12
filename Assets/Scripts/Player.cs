@@ -40,16 +40,27 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject shieldVisualizer;
 
+    [SerializeField]
+    private int _score;
+
+    private UIManager _uiManager;
+
     void Start()
     {
-        transform.position
-            = new Vector3(0, 0, 0);
+        transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
 
         if (_spawnManager == null)
         {
             Debug.LogError("The Spawn Manager is NULL.");
         }
+
+        if (_uiManager == null)
+        {
+            Debug.LogError("The UI Manager is NULL.");
+        }
+
     }
 
     void Update()
@@ -201,4 +212,11 @@ public class Player : MonoBehaviour
             //could add a shield multiplier here?
         }
     }
+
+    public void AddScore(int points)
+    {
+        _score += points;
+        _uiManager.UpdateScore(_score);
+    }
+
 }
