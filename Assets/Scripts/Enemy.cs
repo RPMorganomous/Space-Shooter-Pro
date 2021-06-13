@@ -49,11 +49,11 @@ public class Enemy : MonoBehaviour
         {
             Destroy(other.gameObject);
 
-            //add to score
             if (_player != null)
             {
                 _player.AddScore(10);
             }
+
             Destroy(this.gameObject);
             
         }
