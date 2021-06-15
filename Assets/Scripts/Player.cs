@@ -39,6 +39,8 @@ public class Player : MonoBehaviour
     //variable reference to shield object
     [SerializeField]
     private GameObject shieldVisualizer;
+    //[SerializeField]
+    //private GameObject gameOverText;
 
     [SerializeField]
     private int _score;
@@ -137,6 +139,7 @@ public class Player : MonoBehaviour
         {
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
+            //gameOverText.SetActive(true);
         }
 
     }
@@ -170,7 +173,7 @@ public class Player : MonoBehaviour
             Debug.Log("TS OFF");
             TripleShotActive();
         }
-    }
+    } //what this is
 
     public void SpeedBoostActive()
     {
