@@ -36,11 +36,11 @@ public class Player : MonoBehaviour
     int lastRunnerTripleShot = 0;
     int lastRunnerSpeedBoost = 0;
 
-    //variable reference to shield object
     [SerializeField]
-    private GameObject shieldVisualizer;
-    //[SerializeField]
-    //private GameObject gameOverText;
+    private GameObject _shieldVisualizer;
+
+    [SerializeField]
+    private GameObject _rightEngine, _leftEngine;
 
     [SerializeField]
     private int _score;
@@ -128,11 +128,22 @@ public class Player : MonoBehaviour
         if (_shieldsActive == true)
         {
             _shieldsActive = false;
-            shieldVisualizer.SetActive(false);
+            _shieldVisualizer.SetActive(false);
             return;  
         }
 
         _lives--;
+
+        switch (_lives)
+        {
+            case 2:
+                _rightEngine.SetActive(true);
+                break;
+            case 1:
+                _leftEngine.SetActive(true);
+                break;
+        }
+
         _uiManager.UpdateLives(_lives);
         if (_lives < 1)
         {
@@ -209,7 +220,7 @@ public class Player : MonoBehaviour
         if (_shieldsActive == false)
         {
             _shieldsActive = true;
-            shieldVisualizer.SetActive(true);
+            _shieldVisualizer.SetActive(true);
         }
         else
         {
