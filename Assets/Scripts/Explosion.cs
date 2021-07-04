@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private AudioManager _audioManager;
     void Start()
     {
+        //_audioManager = GameObject.Find("Audio_Manager").GetComponent<AudioManager>();
+        //_audioManager._playExplosion();
         Destroy(this.gameObject, 3.0f);
     }
 

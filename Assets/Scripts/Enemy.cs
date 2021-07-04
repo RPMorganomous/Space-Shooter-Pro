@@ -8,20 +8,24 @@ public class Enemy : MonoBehaviour
     private float _speed = 4.0f;
 
     private Player _player;
-    //handle to animator component
+
     private Animator _anim;
+
+    //[SerializeField]
+    //private GameObject _explosionPreFab;
+    private AudioSource _audioSource;
 
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
-        // null check _player
+
         if (_player == null)
         {
             Debug.Log("The Player is NULL");
         }
 
-        //assign the component
         _anim = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
 
         if(_anim == null)
         {
@@ -56,7 +60,8 @@ public class Enemy : MonoBehaviour
             {
                 player.Damage();
             }
-            //trigger animation
+
+            _audioSource.Play();
             _anim.SetTrigger("OnEnemyDeath");
             _speed = 0;
             Destroy(this.gameObject, 2.8f);
@@ -70,7 +75,8 @@ public class Enemy : MonoBehaviour
             {
                 _player.AddScore(10);
             }
-            //trigger animation
+
+            _audioSource.Play();
             _anim.SetTrigger("OnEnemyDeath");
             _speed = 0;
             Destroy(this.gameObject, 2.8f);
